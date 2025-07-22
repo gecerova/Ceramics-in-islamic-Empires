@@ -2,35 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ottoman Ceramics Virtual Museum</title>
+  <title>Ceramics in Islamic Empires</title>
   <style>
     body {
-      font-family: 'Times New Roman', serif;
-      background-color: #fff;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f7f4f0;
+      padding: 30px;
     }
     h1 {
-      color: #333366;
+      text-align: center;
+      color: #2f2f2f;
     }
-    .artifact {
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
       border: 1px solid #ddd;
-      padding: 15px;
-      margin-bottom: 20px;
       border-radius: 10px;
-      background-color: #f9f9f9;
+      padding: 15px;
+      width: 280px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    .artifact img {
-      max-width: 250px;
+    .card img {
+      width: 100%;
       height: auto;
-      display: block;
-      margin-top: 10px;
+      border-radius: 6px;
+    }
+    .card h3 {
+      margin: 10px 0 5px;
+      color: #1c1c1c;
+    }
+    .card p {
+      font-size: 14px;
+      color: #555;
+    }
+    .meta {
+      font-size: 13px;
+      color: #777;
+      margin-top: 8px;
     }
   </style>
 </head>
 <body>
-  <h1>Ottoman Ceramics Virtual Museum</h1>
-  <div id="gallery"></div>
+  <h1>Ceramics in Islamic Empires</h1>
+  <div class="container" id="container"></div>
 
-  <script src="script.js"></script>
+  <script>
+    fetch(https://v1.nocodeapi.com/ngecerr/google_sheets/tzmCAoQxioxGMKDx) // 
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById("container");
+        data.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <img src="${item['Image Link']}" alt="${item['Name']}">
+            <h3>${item['Name']}</h3>
+            <p>${item['Description']}</p>
+            <div class="meta"><strong>Findspot:</strong> ${item['Findspot'] || '—'}</div>
+            <div class="meta"><strong>Date:</strong> ${item['Date'] || '—'}</div>
+          `;
+          container.appendChild(card);
+        });
+      });
+  </script>
 </body>
 </html>
+
